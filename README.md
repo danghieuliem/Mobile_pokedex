@@ -1,3 +1,7 @@
+# Fokedex
+![Screen Recording 2024-06-06 at 00 39 38 (1)](https://github.com/danghieuliem/Mobile_pokedex/assets/60537515/37983dac-cc37-4313-92f2-18a59ba895b0)
+
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
