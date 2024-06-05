@@ -43,7 +43,26 @@ export const styles = StyleSheet.create({
     color: CPrimary,
     fontSize: 20,
   },
-  pokeList: {
+  // pokeList: {
+  //   marginLeft: 6,
+  //   marginRight: 6,
+  //   marginBottom: 6,
+  //   paddingTop: 12,
+  //   paddingLeft: 8,
+  //   paddingRight: 8,
+  //   borderRadius: 12,
+  //   overflow: 'hidden',
+  //   backgroundColor: CGray.white,
+  //   flex: 1,
+  // },
+  viewList: {
+    // display: 'flex',
+    // flexWrap: 'wrap',
+    // flexDirection: 'row',
+    // paddingTop: 4,
+    // paddingBottom: 24,
+    // overflow: 'hidden',
+
     marginLeft: 6,
     marginRight: 6,
     marginBottom: 6,
@@ -55,13 +74,14 @@ export const styles = StyleSheet.create({
     backgroundColor: CGray.white,
     flex: 1,
   },
-  viewList: {
+  visualList: {
+    backgroundColor: CGray.background,
+    borderColor: 'black',
     display: 'flex',
-    flexWrap: 'wrap',
+  },
+  groupItems: {
+    display: 'flex',
     flexDirection: 'row',
-    paddingTop: 4,
-    paddingBottom: 24,
-    overflow: 'hidden',
   },
   listItem: {
     width: '33.33%',

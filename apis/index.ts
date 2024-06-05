@@ -13,10 +13,10 @@ const promise = <T>(url: string) =>
       return null
     })
 
-export const getPokemonByName = async (
-  name: string,
+export const getPokemonByNameOrId = (
+  param: string | number,
 ): Promise<TPokemon | null> => {
-  return promise(`https://pokeapi.co/api/v2/pokemon/${name}`)
+  return promise(`https://pokeapi.co/api/v2/pokemon/${param}`)
 }
 
 export const getListPokemon = ({
