@@ -2,6 +2,7 @@ import { isNumber } from 'lodash'
 
 export const imagePokemonUrlById = (id: number) => {
   const i = id > 1025 ? 10000 + (id - 1025) : id
+  // return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${i}.gif`
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${i}.png`
   // return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png`
 }

@@ -13,6 +13,12 @@ const promise = <T>(url: string) =>
       return null
     })
 
+export const getPokemonSpeciesNameOrId = (
+  param: string | number,
+): Promise<TSpecies | null> => {
+  return promise(`https://pokeapi.co/api/v2/pokemon-species/${param}`)
+}
+
 export const getPokemonByNameOrId = (
   param: string | number,
 ): Promise<TPokemon | null> => {

@@ -12,5 +12,5 @@
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
   },
-  "cSpell.words": ["pokedex", "Pressable"]
+  "cSpell.words": ["pokeball", "pokedex", "Pressable", "SATK", "SDEF"]
 }
