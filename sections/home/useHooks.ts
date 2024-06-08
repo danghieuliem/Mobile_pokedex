@@ -2,7 +2,7 @@ import { getListPokemon } from '@/apis'
 import { useMutation } from '@tanstack/react-query'
 import { useEffect, useMemo, useState, useTransition } from 'react'
 
-// const MAX_SIZE =  30
+// const MAX_SIZE = 30
 const MAX_SIZE = 1_025
 
 export type TFormatResList = {
@@ -25,7 +25,7 @@ export const useHooks = () => {
     mutateAsync: mutateGetAll,
     isPending: isPendingGetListName,
   } = useMutation<IGetAllResolve | null>({
-    mutationKey: ['getListPokemon', { ...filter }, 1],
+    mutationKey: ['getListPokemon', filter.limit, filter.offset],
     mutationFn: () => getListPokemon(filter),
     retry: false,
   })
@@ -40,18 +40,16 @@ export const useHooks = () => {
         return {
           name,
           url,
-          id: idx + 1,
+          id: idx + 1 + filter.offset,
         }
       }) || []
     )
-  }, [data])
+  }, [data, filter.offset])
 
   const handleChangeText = (e: string) => transition(() => setValue(e))
-  // const handleSearch = () => mutateAsync()
+
   const handleSearch = () => {
     const val = value.trim()
-    console.log({ val })
-
     // if search by Id
     if (!isNaN(+val) && +val > 0 && MAX_SIZE >= +val)
       return setSearchList([formatListData[+val - 1]])
@@ -76,6 +74,7 @@ export const useHooks = () => {
     const listSize = (searchList || formatListData).length
     return listSize + (listSize % 3 === 0 ? 0 : 1)
   }
+
   const getItem = (data: any, index: number) => {
     const listSize = searchList || formatListData
     return listSize.slice(index * 3, index * 3 + 3)

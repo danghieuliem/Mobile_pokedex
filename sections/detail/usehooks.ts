@@ -10,6 +10,7 @@ export const useHooks = () => {
     queryFn: () => getPokemonByNameOrId(id),
     retry: false,
   })
+
   const species = useQuery<TSpecies | null>({
     queryKey: ['getPokemonSpecies', id],
     queryFn: () => getPokemonSpeciesNameOrId(id),

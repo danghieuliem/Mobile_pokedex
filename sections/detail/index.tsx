@@ -28,15 +28,15 @@ export const Detail = () => {
           BackgroundColorTypes[data?.types[0].type.name as never],
       }}
     >
-      <ImageBackground
-        style={styles.pokeball}
-        source={require('assets/images/pokeball.png')}
-        resizeMode='contain'
-      ></ImageBackground>
       {isLoading ? (
         <Text>loading...</Text>
       ) : (
         <>
+          <ImageBackground
+            style={styles.pokeball}
+            source={require('assets/images/pokeball.png')}
+            resizeMode='contain'
+          ></ImageBackground>
           <View style={styles.header}>
             <View style={styles.left}>
               <Pressable

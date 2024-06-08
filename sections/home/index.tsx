@@ -1,5 +1,4 @@
 import { PokeCard } from '@/components/pokeCard'
-import { imagePokemonUrlById } from '@/utils'
 import {
   Image,
   Pressable,
@@ -28,11 +27,7 @@ const HomePage = ({ navigation }: any) => {
       <View style={styles.groupItems}>
         {item.map((e) => (
           <View key={e.id} style={styles.listItem}>
-            <PokeCard
-              id={e.id}
-              name={e.name}
-              imageUrl={imagePokemonUrlById(e.id)}
-            ></PokeCard>
+            <PokeCard id={e.id} name={e.name} viewMode='anime'></PokeCard>
           </View>
         ))}
       </View>
@@ -41,23 +36,26 @@ const HomePage = ({ navigation }: any) => {
 
   return (
     <View style={styles.mainView}>
-      <View style={styles.header}>
-        <Image
-          style={styles.logo}
-          source={require('assets/images/pokedex-logo.png')}
-        ></Image>
-        <View style={styles.groupFilter}>
-          <TextInput
-            value={value}
-            style={styles.inputFilter}
-            keyboardType='default'
-            onChangeText={handleChangeText}
-            onSubmitEditing={handleSearch}
-          />
-          <Pressable style={styles.btnFilter} onPress={handleSearch}>
-            <Text style={styles.btnText}>#</Text>
-          </Pressable>
+      <View style={styles.groupHeader}>
+        <View style={styles.header}>
+          <Image
+            style={styles.logo}
+            source={require('assets/images/pokedex-logo.png')}
+          ></Image>
+          <View style={styles.groupFilter}>
+            <TextInput
+              value={value}
+              style={styles.inputFilter}
+              keyboardType='default'
+              onChangeText={handleChangeText}
+              onSubmitEditing={handleSearch}
+            />
+            <Pressable style={styles.btnFilter} onPress={handleSearch}>
+              <Text style={styles.btnText}>#</Text>
+            </Pressable>
+          </View>
         </View>
+        <View style={styles.searchTypes}></View>
       </View>
       {isPendingGetListName ? (
         <Text>Loading...</Text>

@@ -8,6 +8,8 @@ export const styles = StyleSheet.create({
     height: '100%',
     gap: 24,
   },
+  groupHeader: {},
+  searchTypes: {},
   header: {
     paddingTop: 40,
     paddingLeft: 20,
@@ -64,7 +66,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   listItem: {
-    width: '33.33%',
+    marginVertical: 4,
+    // flex: 1,
+    width: '33%',
     display: 'flex',
     alignItems: 'center',
   },

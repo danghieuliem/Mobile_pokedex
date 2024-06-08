@@ -1,14 +1,8 @@
 import { CGray } from '@/constants/Colors'
+import { getHexColorAlpha } from '@/utils'
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
-  id: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
-    color: CGray.medium,
-    fontSize: 12,
-  },
   pokeCardMain: {
     borderRadius: 8,
     width: 100,
@@ -27,10 +21,30 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
   },
-  image: { width: 80, height: 80 },
+  id: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    color: CGray.medium,
+    backgroundColor: getHexColorAlpha(CGray.background, '80%'),
+    borderRadius: 12,
+    paddingHorizontal: 4,
+    fontSize: 10,
+    zIndex: 10,
+    overflow: 'hidden',
+  },
+  imageContainer: {
+    width: '100%',
+    flex: 1,
+    paddingHorizontal: 8,
+  },
+  image: {
+    width: '100%',
+    flex: 1,
+  },
   name: {
     fontWeight: 'bold',
-    marginTop: -8,
+    paddingBottom: 4,
   },
   itemBg: {
     position: 'absolute',

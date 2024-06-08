@@ -1,18 +1,35 @@
-import { FormatIdToSting, capitalize } from '@/utils'
+import { FormatIdToSting, capitalize, imagePokemonUrlById } from '@/utils'
 import { Link } from 'expo-router'
-import { useMemo } from 'react'
-import { Image, Text, View } from 'react-native'
+import { useEffect, useMemo, useState } from 'react'
+import { ImageBackground, Text, View } from 'react-native'
 import { styles } from './styles'
 
 type TProps = {
   name: string
-  imageUrl: string
   id: number
+  viewMode?: 'quality' | 'pixel' | 'anime'
 }
-export const PokeCard = ({ name, imageUrl, id = 1 }: TProps) => {
+export const PokeCard = ({ name, id = 1, viewMode = 'quality' }: TProps) => {
   const formatId = useMemo(() => {
     return '#0000'.slice(0, 5 - id.toString().length) + id
   }, [id])
+
+  const [imageUrl, setImageUrl] = useState<string>(
+    imagePokemonUrlById(id, 'pixel'),
+  )
+
+  useEffect(() => {
+    const url = imagePokemonUrlById(id, viewMode)
+    fetch(url)
+      .then((res) => {
+        if (res.status !== 404)
+          return setImageUrl(imagePokemonUrlById(id, viewMode))
+      })
+      .catch(() => {
+        return setImageUrl(imagePokemonUrlById(id, viewMode))
+      })
+  }, [viewMode, id])
+
   return (
     <Link
       href={{
@@ -21,7 +38,13 @@ export const PokeCard = ({ name, imageUrl, id = 1 }: TProps) => {
     >
       <View style={styles.pokeCardMain}>
         <Text style={styles.id}>{FormatIdToSting(formatId)}</Text>
-        <Image source={{ uri: imageUrl }} style={styles.image}></Image>
+        <View style={styles.imageContainer}>
+          <ImageBackground
+            resizeMode='contain'
+            source={{ uri: imageUrl }}
+            style={styles.image}
+          ></ImageBackground>
+        </View>
         <Text style={styles.name}>{capitalize(name)}</Text>
         <Text style={styles.itemBg}></Text>
       </View>
