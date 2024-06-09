@@ -14,9 +14,7 @@ export const PokeCard = ({ name, id = 1, viewMode = 'quality' }: TProps) => {
     return '#0000'.slice(0, 5 - id.toString().length) + id
   }, [id])
 
-  const [imageUrl, setImageUrl] = useState<string>(
-    imagePokemonUrlById(id, 'pixel'),
-  )
+  const [imageUrl, setImageUrl] = useState<string>()
 
   useEffect(() => {
     const url = imagePokemonUrlById(id, viewMode)
@@ -43,6 +41,7 @@ export const PokeCard = ({ name, id = 1, viewMode = 'quality' }: TProps) => {
             resizeMode='contain'
             source={{ uri: imageUrl }}
             style={styles.image}
+            defaultSource={require('assets/images/pokeball-loading.png')}
           ></ImageBackground>
         </View>
         <Text style={styles.name}>{capitalize(name)}</Text>
