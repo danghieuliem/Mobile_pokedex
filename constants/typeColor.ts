@@ -19,6 +19,7 @@ export const TypeName = [
   'rock',
   'steel',
   'water',
+  'all',
 ] as const
 
 export const BackgroundColorTypes: {
@@ -42,6 +43,7 @@ export const BackgroundColorTypes: {
   rock: '#B69E31',
   steel: '#B7B9D0',
   water: '#6493EB',
+  all: CGray.background,
 }
 
 export const TextColorTypes: {
@@ -65,4 +67,5 @@ export const TextColorTypes: {
   rock: CGray.dark,
   steel: CGray.dark,
   water: CGray.dark,
+  all: CGray.dark,
 }

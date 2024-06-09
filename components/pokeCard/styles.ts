@@ -45,6 +45,7 @@ export const styles = StyleSheet.create({
   name: {
     fontWeight: 'bold',
     paddingBottom: 4,
+    fontSize: 12,
   },
   itemBg: {
     position: 'absolute',

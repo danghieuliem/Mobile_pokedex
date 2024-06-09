@@ -1,6 +1,9 @@
-import { getListPokemon } from '@/apis'
+import { getListPokemon, getListPokemonByType } from '@/apis'
+import { BackgroundColorTypes } from '@/constants/typeColor'
+import { getIdFrom } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
-import { useEffect, useMemo, useState, useTransition } from 'react'
+import { sortBy } from 'lodash'
+import { useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 
 // const MAX_SIZE = 30
 const MAX_SIZE = 1_025
@@ -12,23 +15,37 @@ export type TFormatResList = {
 }
 
 export const useHooks = () => {
+  const [data, setData] = useState<TBaseVale[]>([])
   const [value, setValue] = useState('')
+  const [isShowFilter, setIsShowFilter] = useState(false)
   const [searchList, setSearchList] = useState<TFormatResList[]>()
   const [isPending, transition] = useTransition()
-  const [filter, setFilter] = useState({
-    limit: MAX_SIZE, // https://pokeapi.co
+  const [isSortNumber, setIsSortNumber] = useState(true)
+
+  const [filter, setFilter] = useState<{
+    limit: number
+    offset: number
+    type: TUnionType | null
+  }>({
+    limit: MAX_SIZE,
     offset: 0,
+    type: null,
   })
 
-  const {
-    data,
-    mutateAsync: mutateGetAll,
-    isPending: isPendingGetListName,
-  } = useMutation<IGetAllResolve | null>({
-    mutationKey: ['getListPokemon', filter.limit, filter.offset],
-    mutationFn: () => getListPokemon(filter),
-    retry: false,
-  })
+  const { mutateAsync: mutateGetAll, isPending: isPendingGetListName } =
+    useMutation<TTypeResponse | IGetAllResolve | null>({
+      mutationKey: ['getListPokemon', filter.limit, filter.offset, filter.type],
+      mutationFn: () =>
+        filter.type !== 'all' && filter.type
+          ? getListPokemonByType(filter.type as never)
+          : getListPokemon(filter),
+      onSuccess(data) {
+        filter.type !== 'all' && filter.type
+          ? setData((data as TTypeResponse).pokemon.map((e) => e.pokemon))
+          : setData((data as IGetAllResolve).results)
+      },
+      retry: false,
+    })
 
   useEffect(() => {
     mutateGetAll()
@@ -36,15 +53,19 @@ export const useHooks = () => {
 
   const formatListData = useMemo<TFormatResList[]>(() => {
     return (
-      data?.results.map(({ name, url }, idx) => {
+      data.map(({ name, url }, idx) => {
         return {
           name,
           url,
-          id: idx + 1 + filter.offset,
+          id: getIdFrom(url),
         }
       }) || []
-    )
+    ).filter((e) => e.id <= MAX_SIZE)
   }, [data, filter.offset])
+
+  useEffect(() => {
+    handleSearch()
+  }, [isSortNumber, formatListData])
 
   const handleChangeText = (e: string) => transition(() => setValue(e))
 
@@ -54,7 +75,7 @@ export const useHooks = () => {
     if (!isNaN(+val) && +val > 0 && MAX_SIZE >= +val)
       return setSearchList([formatListData[+val - 1]])
 
-    setSearchList(
+    const newList =
       val.length === 0
         ? formatListData
         : (formatListData
@@ -63,11 +84,17 @@ export const useHooks = () => {
               return {
                 name,
                 url,
-                id: idx + 1,
+                id: getIdFrom(url),
               }
             })
-            .filter((e) => !!e) as never),
-    )
+            .filter((e) => !!e) as never)
+
+    setSearchList(newList)
+    if (isSortNumber) {
+      setSearchList(sortBy(newList, ['id']))
+    } else {
+      setSearchList(sortBy(newList, ['name']))
+    }
   }
 
   const getItemCount = (data: TFormatResList[]) => {
@@ -84,16 +111,34 @@ export const useHooks = () => {
     return `${index * 3}-${index * 3 + 3}`
   }
 
+  const listTypeName = useMemo<TUnionType[]>((): TUnionType[] => {
+    return Object.keys(BackgroundColorTypes) as never
+  }, [])
+
+  const toggleFilter = useCallback(() => {
+    setIsShowFilter(!isShowFilter)
+  }, [isShowFilter])
+
+  const updateSearchType = (type: TUnionType) => {
+    setFilter({ ...filter, type })
+  }
+
   return {
     handleChangeText,
     handleSearch,
     getItemCount,
     getItem,
     keyExtractor,
+    toggleFilter,
+    updateSearchType,
+    isShowFilter,
     formatListData,
     filter,
     isPendingGetListName,
     value,
     searchList,
+    listTypeName,
+    isSortNumber,
+    setIsSortNumber,
   }
 }

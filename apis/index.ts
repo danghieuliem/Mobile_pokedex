@@ -33,3 +33,9 @@ export const getListPokemon = ({
     `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`,
   )
 }
+
+export const getListPokemonByType = (
+  type: TUnionType,
+): Promise<TTypeResponse | null> => {
+  return promise(`https://pokeapi.co/api/v2/type/${type}`)
+}

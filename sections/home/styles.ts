@@ -8,17 +8,18 @@ export const styles = StyleSheet.create({
     height: '100%',
     gap: 24,
   },
-  groupHeader: {},
-  searchTypes: {},
-  header: {
-    paddingTop: 40,
+  groupHeader: {
     paddingLeft: 20,
     paddingRight: 20,
-    display: 'flex',
     gap: 12,
+  },
+  header: {
+    paddingTop: 40,
+    display: 'flex',
   },
   logo: { height: 32, width: 146 },
   groupFilter: {
+    paddingTop: 12,
     display: 'flex',
     flexDirection: 'row',
     gap: 20,
@@ -45,6 +46,17 @@ export const styles = StyleSheet.create({
     color: CPrimary,
     fontSize: 20,
   },
+  searchTypes: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 4,
+    flexWrap: 'wrap',
+  },
+  sort: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  sortText: {},
   viewList: {
     marginLeft: 6,
     marginRight: 6,

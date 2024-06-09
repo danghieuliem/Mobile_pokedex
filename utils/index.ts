@@ -129,3 +129,13 @@ export const getHexColorAlpha = (hexColor: string, opacityPercent: string) => {
   }
   return hexColor + (code[opacityPercent as never] || '00')
 }
+
+export const getIdFrom = (url: string): number => {
+  try {
+    const newUrl = new URL(url)
+    const partOfPathName = newUrl.pathname.split('/')
+    return Number(partOfPathName[partOfPathName.length - 2])
+  } catch (e) {
+    return NaN
+  }
+}

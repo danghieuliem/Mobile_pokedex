@@ -97,13 +97,13 @@ type TRedBlue = {
   front_gray: string
   front_transparent: string
 }
-type Other = {
+type TOther = {
   dream_world: TDreamWorld
   home: THome
   'official-artwork': TOfficialartwork
-  showdown: Showdown
+  showdown: TShowdown
 }
-type Showdown = {
+type TShowdown = {
   back_default: string
   back_female: string
   back_shiny: string

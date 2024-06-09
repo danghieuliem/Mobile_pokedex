@@ -39,6 +39,7 @@ type TUnionType =
   | 'rock'
   | 'steel'
   | 'water'
+  | 'all'
 
 type Type = {
   slot: number
@@ -58,8 +59,8 @@ type TSprites = {
   front_female: string
   front_shiny: string
   front_shiny_female: string
-  other: Other
-  versions: Versions
+  other: TOther
+  versions: TVersions
 }
 type TMove = {
   move: TBaseVale
